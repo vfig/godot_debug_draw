@@ -219,18 +219,18 @@ func _process_lines():
 		return
 
 	im.surface_begin(Mesh.PRIMITIVE_LINES)
-	
+
 	for line in _lines:
 		var p1 : Vector3 = line[0]
 		var p2 : Vector3 = line[1]
 		var color : Color = line[2]
-		
+
 		im.surface_set_color(color)
 		im.surface_add_vertex(p1)
 		im.surface_add_vertex(p2)
-	
+
 	im.surface_end()
-	
+
 	# Delayed removal
 	var i := 0
 	while i < len(_lines):
@@ -261,7 +261,7 @@ func _process_canvas():
 
 func _on_CanvasItem_draw():
 	var ci := _canvas_item
-	
+
 	var font := DebugDrawFont
 
 	var ascent := Vector2(0, font.get_ascent())
