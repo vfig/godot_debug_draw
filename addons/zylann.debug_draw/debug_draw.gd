@@ -135,6 +135,32 @@ func draw_ray_3d(origin: Vector3, direction: Vector3, length: float, color : Col
 	draw_line_3d(origin, origin + direction * length, color)
 
 
+## @brief Draws a plane as a square with a ray for its normal
+## @param normal: plane normal in world units
+## @param d: distance from origin in world units
+## @param color
+## @param size: The radial size of the drawn rectangle
+## @param facing: point to look at, in world units
+func draw_plane_3d(normal: Vector3, d: float, color: Color, size: float=1.0, facing: Vector3=Vector3.ZERO):
+	var tangent:Vector3
+	if normal==Vector3.UP:
+		tangent = normal.cross(Vector3.RIGHT).normalized()
+	else:
+		tangent = normal.cross(Vector3.UP).normalized()
+	var bitangent := normal.cross(tangent).normalized()
+	var center := Plane(normal, d).project(facing)
+	var t:Transform3D = Transform3D(tangent, normal, bitangent, center)
+	var c0 := t*(size*Vector3(1,0,1))
+	var c1 := t*(size*Vector3(1,0,-1))
+	var c2 := t*(size*Vector3(-1,0,-1))
+	var c3 := t*(size*Vector3(-1,0,1))
+	draw_line_3d(t*Vector3.ZERO, t*Vector3.UP, color)
+	draw_line_3d(c0, c1, color)
+	draw_line_3d(c1, c2, color)
+	draw_line_3d(c2, c3, color)
+	draw_line_3d(c3, c0, color)
+
+
 ## @brief Adds a text monitoring line to the HUD, from the provided value.
 ## It will be shown as such: - {key}: {text}
 ## Multiple calls with the same `key` will override previous text.
