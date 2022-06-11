@@ -46,6 +46,24 @@ func _ready():
 	add_child(immediate_mesh_instance)
 
 
+const _colors := [
+	Color(0.168, 0.058, 0.329),
+	Color(0.670, 0.121, 0.396),
+	Color(1, 0.309, 0.411),
+	Color(1, 0.968, 0.972),
+	Color(1, 0.505, 0.258),
+	Color(1, 0.854, 0.270),
+	Color(0.2, 0.407, 0.862),
+	Color(0.286, 0.905, 0.925),
+	]
+var _color_index:int = 0
+
+## @brief Returns the next color in the series.
+func color() -> Color:
+	var c:Color = _colors[_color_index]
+	_color_index = (_color_index+1)%_colors.size()
+	return c
+
 ## @brief Draws the unshaded outline of a 3D cube.
 ## @param position: world-space position of the center of the cube
 ## @param size: size of the cube in world units
@@ -212,7 +230,7 @@ func _process(delta: float):
 	_process_boxes()
 	_process_lines()
 	_process_canvas()
-
+	_color_index = 0
 
 func _process_3d_boxes_delayed_free(items: Array):
 	var i := 0
