@@ -43,6 +43,7 @@ func _ready():
 	var immediate_mesh_instance = MeshInstance3D.new()
 	immediate_mesh_instance.material_override = _get_line_material()
 	immediate_mesh_instance.mesh = _line_immediate_mesh
+	immediate_mesh_instance.cast_shadow = false
 	add_child(immediate_mesh_instance)
 
 
